@@ -1,0 +1,23 @@
+---
+- name: copy files to home dir
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}"
+  loop:
+    - .bash_profile
+    - .config
+    - .tmux.conf
+    - .vim
+    - .vimrc
+- name: update .gitconfig
+  git_config:
+    name: "{{ item.name }}"
+    scope: global
+    value: "{{ item.value }}"
+  loop:
+    - { name: 'user.name', value: 'q' }
+    - { name: 'user.email', value: 'q@q' }
+    - { name: 'alias.st', value: 'status' }
+    - { name: 'alias.ci', value: 'commit' }
+    - { name: 'alias.co', value: 'checkout' }
+    - { name: 'core.editor', value: 'vim' }

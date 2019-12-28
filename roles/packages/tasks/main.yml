@@ -1,0 +1,27 @@
+---
+- name: ensure packages are installed
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  when:
+    ansible_os_family != 'Darwin'
+  loop:
+    - curl
+    - git
+    - tig
+    - tmux
+    - vim
+    
+- name: ensure packages are installed (macos)
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  when:
+    ansible_os_family == 'Darwin'
+  loop:
+    - curl
+    - git
+    - tig
+    - tmux
+    - vim
